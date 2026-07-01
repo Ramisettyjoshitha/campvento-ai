@@ -1,36 +1,61 @@
-from student import student_details, student_dashboard
-from admin import admin_dashboard
+from student import student_signup
+from student import student_login
+
+from admin import admin_login
+
+import database
+
+
 def welcome():
-    print("=" * 50)
-    print("CAMPVENTO".center(50))
-    print("AI-Powered College Event Management Platform".center(50))
-    print("=" * 50)
+
+    print("=" * 60)
+    print("CAMPVENTO".center(60))
+    print("AI-Powered College Event Management Platform".center(60))
+    print("=" * 60)
+
+
 def main_menu():
-    print("\n========== Main Menu ==========")
-    print("1. Student Login")
-    print("2. Club Admin Login")
-    print("3. Exit")
-    print("=" * 29)
-while True:
-    welcome()
-    main_menu()
+
     while True:
+
+        welcome()
+
+        print("\n========== Main Menu ==========")
+
+        print("1. Student Sign Up")
+        print("2. Student Login")
+        print("3. Club Admin Login")
+        print("4. Exit")
+
         try:
-            role=int(input("\n enter your login choice (1-3):"))
-            if 1<=role<=3:
+
+            choice = int(input("\nEnter your choice: "))
+
+            if choice == 1:
+
+                student_signup()
+
+            elif choice == 2:
+
+                student_login()
+
+            elif choice == 3:
+
+                admin_login()
+
+            elif choice == 4:
+
+                print("\nThank you for using Campvento.")
+                print("Good Bye!")
                 break
+
             else:
-                print("please enter 1 or 2 or 3")
+
+                print("Please enter a number between 1 and 4.")
+
         except ValueError:
-            print("invalid input,please enter a number")
-    if role==1:
-        print("you have selected student login")
-        name,department,year=student_details()
-        student_dashboard(name, department, year)
-    elif role == 2: 
-        print("\nClub Admin Login Selected")
-        admin_dashboard()
-    elif role == 3:
-        print("\nThank you for using Campvento!")
-        print("Have a great day!")
-        break
+
+            print("Invalid input. Please enter a number.")
+
+
+main_menu()
