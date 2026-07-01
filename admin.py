@@ -12,7 +12,12 @@ def admin_dashboard():
             admin_choice=int(input("enter your choice(1-4):"))
             if admin_choice==1:
                 add_event=input("enter the event you want to create:")
-                events.append(add_event)
+                import sqlite3
+                conn=sqlite3.connect("campvento.db")
+                c=conn.cursor()
+                c.execute("INSERT INTO eventtable (event_name) VALUES(?)",(add_event,))
+                conn.commit()
+                conn.close()
                 print(f"\n {add_event} has been added successfully in the events")
                 college_events()
             elif admin_choice==2:
@@ -23,12 +28,18 @@ def admin_dashboard():
                 college_events()
                 try:
                     delete_event=int(input("enter the event number you want to delete:"))
-                    if 1<=delete_event<=len(events):
-                        deleted_event=events.pop(delete_event-1)
-                        print(f"{deleted_event} has been deleted successfully")
-                        print("\n updated events list")
+                    import sqlite3
+                    conn=sqlite3.connect("campvento.db")
+                    c=conn.cursor()
+                    c.execute("SELECT event_name FROM eventtable WHERE id=?",(delete_event,))
+                    event = c.fetchone()
+                    if event:
+                        c.execute("DELETE FROM eventtable WHERE id=?",(delete_event,))
+                        print(f"{event[0]} deleted sucessfully")
+                        conn.commit()
                         college_events()
                     else:
+                        conn.close()
                         print("\n please enter a valid number")  
                 except ValueError:
                     print("invalid input please enter valid number")

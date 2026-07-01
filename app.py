@@ -26,7 +26,7 @@ while True:
     if role==1:
         print("you have selected student login")
         name,department,year=student_details()
-        student_dashboard(name)
+        student_dashboard(name, department, year)
     elif role == 2: 
         print("\nClub Admin Login Selected")
         admin_dashboard()
